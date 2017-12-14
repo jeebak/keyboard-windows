@@ -20,7 +20,11 @@ Space & BS::Send, {Media_Next}
 
 Space & Tab::AltTab
 Space & w::Send, {Ctrl Down}{Tab}{Ctrl Up}
+Space & e::Send, {Ctrl Down}n{Ctrl Up}
+Space & r::Send, {F5}
+Space & a::Send, {Ctrl Down}a{Ctrl Up}
 
+Space & y::Send, {Volume_Mute}
 Space & [::Send, {Volume_Down}
 Space & ]::Send, {Volume_Up}
 Space & \::Send, {Media_Play_Pause}
@@ -32,8 +36,6 @@ Space & l::Send, {Right}
 
 Space & p::Send, {Backspace}
 Space & m::Send, {Delete}
-
-Space & y::Send, {Insert}
 
 Space & h::Send, {PgUp}
 Space & n::Send, {PgDn}
