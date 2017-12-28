@@ -55,8 +55,9 @@ Return
 Space & s::Send, {Space}
 Space & f::Send, {Ctrl Down}f{Ctrl Up}
 
-Space & LShift::Send, {Alt Down}{Space}{Alt Up}
-<+Space::Send, {Alt Down}{Space}{Alt Up}
+; Too distracting
+; Space & LShift::Send, {Alt Down}{Space}{Alt Up}
+; <+Space::Send, {Alt Down}{Space}{Alt Up}
 
 Space & z::Send, {Ctrl Down}z{Ctrl Up}
 Space & x::Send, {Ctrl Down}x{Ctrl Up}
