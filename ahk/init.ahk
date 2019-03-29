@@ -12,7 +12,7 @@
 #Include include\AdvancedWindowSnap.ahk
 #Include include\AlwaysOnTop.ahk
 #Include include\CapsLockTapEscapeHoldControl.ahk
-#Include include\Media.ahk
+; #Include include\Media.ahk
 #Include include\Screenshots.ahk
 #Include include\Spotlight.ahk
 #Include include\TabModifier.ahk
