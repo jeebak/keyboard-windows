@@ -52,6 +52,18 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
     } else if (winPlaceHorizontal == "right-third") {
         posX  := MonitorWorkAreaLeft + (MonitorWorkAreaRight - MonitorWorkAreaLeft)/1.5
         width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
+    } else if (winPlaceHorizontal == "one-fourth") {
+        width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
+        posX  := MonitorWorkAreaLeft
+    } else if (winPlaceHorizontal == "two-fourth") {
+        width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
+        posX  := width
+    } else if (winPlaceHorizontal == "three-fourth") {
+        width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
+        posX  := MonitorWorkAreaLeft + (MonitorWorkAreaRight - MonitorWorkAreaLeft)/2
+    } else if (winPlaceHorizontal == "four-fourth") {
+        width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
+        posX  := MonitorWorkAreaRight - width
     } else {
         posX  := MonitorWorkAreaLeft
         width := MonitorWorkAreaRight - MonitorWorkAreaLeft
@@ -66,6 +78,30 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
     }
 
     WinMove,A,,%posX%,%posY%,%width%,%height%
+}
+
+/**
+ * SnapWiarae takes current window resizing it to half and move up or down
+ * @param {string} direction   Up or Down
+ */
+SnapWiarae(direction) {
+    WinGet activeWin, ID, A
+    activeMon := GetMonitorIndexFromWindow(activeWin)
+
+    SysGet, MonitorWorkArea, MonitorWorkArea, %activeMon%
+
+    ; MsgBox, %MonitorWorkAreaBottom%, %MonitorWorkAreaTop%, %MonitorWorkAreaRight%, %MonitorWorkAreaLeft%
+    ;          1440                     40                    3440                    0
+
+    height := (MonitorWorkAreaBottom - MonitorWorkAreaTop)/2
+
+    if (direction == "up") {
+        posY := MonitorWorkAreaTop
+    } else if (direction == "down") {
+        posY := MonitorWorkAreaBottom - height
+    }
+
+    WinMove,A,,,%posY%,,%height%
 }
 
 /**
@@ -110,29 +146,50 @@ GetMonitorIndexFromWindow(windowHandle) {
     return %monitorIndex%
 }
 
+; https://autohotkey.com/docs/Hotkeys.htm
+; # Win, ! Alt, ^ Control, + Shift
+; -----------------------------------------------------------------------------
+; Control+Shift+Win
+; -----------------------------------------------------------------------------
 ; Three rows
-^#+7::SnapActiveWindow("top",    "full", "third")
-^#+8::SnapActiveWindow("middle", "full", "third")
-^#+9::SnapActiveWindow("bottom", "full", "third")
-
+^+#7::SnapActiveWindow("top",       "full",         "third")
+^+#8::SnapActiveWindow("middle",    "full",         "third")
+^+#9::SnapActiveWindow("bottom",    "full",         "third")
 ; Three columns
-^#+y::SnapActiveWindow("top", "left-third",   "full")
-^#+h::SnapActiveWindow("top", "middle-third", "full")
-^#+n::SnapActiveWindow("top", "right-third",  "full")
-
+^+#y::SnapActiveWindow("top",       "left-third",   "full")
+^+#h::SnapActiveWindow("top",       "middle-third", "full")
+^+#n::SnapActiveWindow("top",       "right-third",  "full")
 ; Two rows
-^#+i::SnapActiveWindow("top",    "full", "half")
-^#+k::SnapActiveWindow("bottom", "full", "half")
-
+^+#i::SnapActiveWindow("top",       "full",         "half")
+^+#k::SnapActiveWindow("bottom",    "full",         "half")
 ; Two columns
-^#+j::SnapActiveWindow("top", "left",  "full")
-^#+l::SnapActiveWindow("top", "right", "full")
-
+^+#j::SnapActiveWindow("top",       "left",         "full")
+^+#l::SnapActiveWindow("top",       "right",        "full")
 ; 4-corners
-^#+u::SnapActiveWindow("top",    "left",  "half")
-^#+o::SnapActiveWindow("top",    "right", "half")
-^#+m::SnapActiveWindow("bottom", "left",  "half")
-^#+.::SnapActiveWindow("bottom", "right", "half")
-
+^+#u::SnapActiveWindow("top",       "left",         "half")
+^+#o::SnapActiveWindow("top",       "right",        "half")
+^+#m::SnapActiveWindow("bottom",    "left",         "half")
+^+#.::SnapActiveWindow("bottom",    "right",        "half")
+; Center
+^+#,::SnapActiveWindow("top",       "full",         "full")
 ; Maximize
-^#+/::SnapActiveWindow("top", "full",  "full")
+^+#/::SnapActiveWindow("top",       "full",         "full")
+; -----------------------------------------------------------------------------
+; Control+Shift+Alt
+; -----------------------------------------------------------------------------
+; Three columns (top half)
+^+!j::SnapActiveWindow("top",       "left-third",   "half")
+^+!k::SnapActiveWindow("top",       "middle-third", "half")
+^+!l::SnapActiveWindow("top",       "right-third",  "half")
+; Three columns (bottom half)
+^+!m::SnapActiveWindow("bottom",    "left-third",   "half")
+^+!,::SnapActiveWindow("bottom",    "middle-third", "half")
+^+!.::SnapActiveWindow("bottom",    "right-third",  "half")
+; Four columns
+^+!u::SnapActiveWindow("top",       "one-fourth",   "full")
+^+!i::SnapActiveWindow("top",       "two-fourth",   "full")
+^+!o::SnapActiveWindow("top",       "three-fourth", "full")
+^+!p::SnapActiveWindow("top",       "four-fourth",  "full")
+; Current Width and Position Snapped Up/Down
+^+!h::SnapWiarae("up")
+^+!n::SnapWiarae("down")
