@@ -18,20 +18,14 @@
 #Include include\TabModifier.ahk
 #Include include\TouchCursor.ahk
 ; ------------------------------------------------------------------------------
-; Custom "Mission Control"
-^!;::
-  Send,^#{left}
-Return
-
-^!'::
-  Send,^#{right}
-Return
-
-^!p::
-  Send,#{tab}
-Return
-
+; LockWorkStation and turn monitor off
 #+^Tab::
-  Send,#l
+{
+  Sleep, 200
+  DllCall("LockWorkStation")
+  Sleep, 1000
+  ; 0x112 == WM_SYSCOMMAND, 0xF170 == SC_MONITORPOWER
+  SendMessage,0x112,0xF170,2,,Program Manager
+}
 Return
 ; ------------------------------------------------------------------------------
