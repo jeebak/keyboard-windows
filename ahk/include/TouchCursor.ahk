@@ -19,10 +19,10 @@ Space & =::Send, {F12}
 Space & BS::Send, {Media_Next}
 
 Space & Tab::AltTab
+Space & q::Send, {Alt Down}{Tab}{Alt Up}
 Space & w::Send, {Ctrl Down}{Tab}{Ctrl Up}
 Space & e::Send, {Ctrl Down}n{Ctrl Up}
 Space & r::Send, {F5}
-Space & a::Send, {Ctrl Down}a{Ctrl Up}
 
 Space & y::Send, {Volume_Mute}
 Space & [::Send, {Volume_Down}
@@ -42,6 +42,8 @@ Space & n::Send, {PgDn}
 Space & u::Send, {Home}
 Space & o::Send, {End}
 
+Space & a::Send, {Ctrl Down}a{Ctrl Up}
+Space & s::Send, {Space}
 Space & d::
   If WinActive("ahk_exe Code.exe") {
     Send ^{F4}
@@ -51,9 +53,8 @@ Space & d::
     Send ^w
   }
 Return
-
-Space & s::Send, {Space}
 Space & f::Send, {Ctrl Down}f{Ctrl Up}
+Space & g::Send, {F3}
 
 ; Too distracting
 ; Space & LShift::Send, {Alt Down}{Space}{Alt Up}
