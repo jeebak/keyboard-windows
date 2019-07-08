@@ -26,8 +26,8 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
 
     SysGet, MonitorWorkArea, MonitorWorkArea, %activeMon%
 
-    ; MsgBox, %MonitorWorkAreaBottom%, %MonitorWorkAreaTop%, %MonitorWorkAreaRight%, %MonitorWorkAreaLeft%
-    ;          1440                     40                    3440                    0
+    ; ToolTip, Debug: %MonitorWorkAreaBottom% %MonitorWorkAreaTop% %MonitorWorkAreaRight% %MonitorWorkAreaLeft%
+    ;                 1440                    40                   3440                   0
 
     if (winSizeHeight == "half") {
         height := (MonitorWorkAreaBottom - MonitorWorkAreaTop)/2
@@ -77,6 +77,8 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
         posY := MonitorWorkAreaTop
     }
 
+;   ToolTip, Debug: X: %posX% Y: %posY% W: %width% H: %height%
+
     WinMove,A,,%posX%,%posY%,%width%,%height%
 }
 
@@ -90,8 +92,8 @@ SnapWiarae(direction) {
 
     SysGet, MonitorWorkArea, MonitorWorkArea, %activeMon%
 
-    ; MsgBox, %MonitorWorkAreaBottom%, %MonitorWorkAreaTop%, %MonitorWorkAreaRight%, %MonitorWorkAreaLeft%
-    ;          1440                     40                    3440                    0
+    ; ToolTip, Debug: %MonitorWorkAreaBottom% %MonitorWorkAreaTop% %MonitorWorkAreaRight% %MonitorWorkAreaLeft%
+    ;                 1440                    40                   3440                   0
 
     height := (MonitorWorkAreaBottom - MonitorWorkAreaTop)/2
 
@@ -100,6 +102,8 @@ SnapWiarae(direction) {
     } else if (direction == "down") {
         posY := MonitorWorkAreaBottom - height
     }
+
+;   ToolTip, Debug: Y: %posY% H: %height%
 
     WinMove,A,,,%posY%,,%height%
 }
