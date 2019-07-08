@@ -29,3 +29,7 @@
 }
 Return
 ; ------------------------------------------------------------------------------
+; Reload this script
+Tab & q::
+  MsgBox,,,Reloading %A_ScriptName%, 2
+  Reload
