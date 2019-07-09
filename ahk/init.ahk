@@ -39,7 +39,7 @@
 }
 Return
 ; ------------------------------------------------------------------------------
-; Reload this script
-Tab & q::
+; Reload this script (Tab+q using TabModifier.ahk)
+!^+q::
   MsgBox,,,Reloading %A_ScriptName%, 2
   Reload
