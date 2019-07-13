@@ -17,6 +17,7 @@
 #Include include\Spotlight.ahk
 #Include include\TabModifier.ahk
 #Include include\TouchCursor.ahk
+#Include include\DockWin.ahk
 ; ------------------------------------------------------------------------------
 ; LockWorkStation and turn monitor off
 #+^Tab::
