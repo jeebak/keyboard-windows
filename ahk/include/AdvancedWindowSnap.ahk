@@ -177,7 +177,7 @@ GetMonitorIndexFromWindow(windowHandle) {
 ; Center
 ^+#,::SnapActiveWindow("top",       "full",         "full")
 ; Maximize
-^+#/::SnapActiveWindow("top",       "full",         "full")
+^+#;::SnapActiveWindow("top",       "full",         "full")
 ; -----------------------------------------------------------------------------
 ; Control+Shift+Alt
 ; -----------------------------------------------------------------------------
