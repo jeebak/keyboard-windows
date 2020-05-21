@@ -55,12 +55,14 @@ Space & s::Send, {Space}
 Space & d::
   If WinActive("ahk_exe Code.exe") {
     Send ^{F4}
+  } Else If WinActive("ahk_exe ConEmu64.exe") {
+    Send ^d
   } Else If WinActive("ahk_class Notepad") {
     Send !{F4}
   } Else {
     Send ^w
   }
-Return
+  Return
 Space & f::Send, {Ctrl Down}f{Ctrl Up}
 Space & g::Send, {F3}
 
@@ -72,7 +74,13 @@ Space & g::Send, {F3}
 Space & z::Send, {Ctrl Down}z{Ctrl Up}
 Space & x::Send, {Ctrl Down}x{Ctrl Up}
 Space & c::Send, {Ctrl Down}c{Ctrl Up}
-Space & v::Send, {Ctrl Down}v{Ctrl Up}
+Space & v::
+  If WinActive("ahk_exe ConEmu64.exe") {
+    Send {LShift Down}{Insert}{LShift Up}
+  } Else {
+    Send, {Ctrl Down}v{Ctrl Up}
+  }
+  Return
 
 ; Tab New/Reopen
 Space & ,::Send, {Ctrl Down}t{Ctrl Up}
