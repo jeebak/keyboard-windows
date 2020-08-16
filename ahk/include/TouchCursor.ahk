@@ -57,6 +57,8 @@ Space & d::
     Send ^{F4}
   } Else If WinActive("ahk_exe ConEmu64.exe") {
     Send ^d
+  } Else If WinActive("ahk_exe mintty.exe") {
+    Send ^d
   } Else If WinActive("ahk_class Notepad") {
     Send !{F4}
   } Else {
@@ -73,9 +75,17 @@ Space & g::Send, {F3}
 ; Undo, Cut, Copy and Paste
 Space & z::Send, {Ctrl Down}z{Ctrl Up}
 Space & x::Send, {Ctrl Down}x{Ctrl Up}
-Space & c::Send, {Ctrl Down}c{Ctrl Up}
+Space & c::
+  If WinActive("ahk_exe mintty.exe") {
+    Send {Ctrl Down}{Insert}{Ctrl Up}
+  } Else {
+    Send, {Ctrl Down}c{Ctrl Up}
+  }
+  Return
 Space & v::
   If WinActive("ahk_exe ConEmu64.exe") {
+    Send {LShift Down}{Insert}{LShift Up}
+  } Else If WinActive("ahk_exe mintty.exe") {
     Send {LShift Down}{Insert}{LShift Up}
   } Else {
     Send, {Ctrl Down}v{Ctrl Up}
