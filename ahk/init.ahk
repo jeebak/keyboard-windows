@@ -18,6 +18,7 @@
 #Include include\TabModifier.ahk
 #Include include\TouchCursor.ahk
 #Include include\DockWin.ahk
+#Include include\QuakeTerminal.ahk
 ; ------------------------------------------------------------------------------
 ; LockWorkStation and turn monitor off
 #+^Tab::
