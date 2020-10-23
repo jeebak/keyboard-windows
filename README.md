@@ -12,7 +12,7 @@ Instead of using:
 
 Other stuff:
 
-- Old (pre-sierra **only**) [Karabiner](https://github.com/jeebak/dotfiles/tree/master/karabiner) customizations
+- Old (pre-sierra **only**) [Karabiner](https://github.com/jeebak/dotfiles/tree/6e62207dcaff536edd2913832e5fb6fa3a076986/karabiner) customizations
 - For Linux: [touchcursor-x11](https://github.com/jeebak/touchcursor-x11)
 - [Example Layout](http://www.keyboard-layout-editor.com/#/gists/55f3e3c9149d23cbae5f8ac559627d0f)
 
