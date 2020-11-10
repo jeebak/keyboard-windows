@@ -55,6 +55,8 @@ Space & s::Send, {Space}
 Space & d::
   If WinActive("ahk_exe Code.exe") {
     Send ^{F4}
+  } Else If WinActive("ahk_exe VSCodium.exe") {
+    Send ^{F4}
   } Else If WinActive("ahk_exe ConEmu64.exe") {
     Send ^d
   } Else If WinActive("ahk_exe mintty.exe") {
@@ -78,6 +80,8 @@ Space & x::Send, {Ctrl Down}x{Ctrl Up}
 Space & c::
   If WinActive("ahk_exe mintty.exe") {
     Send {Ctrl Down}{Insert}{Ctrl Up}
+  } Else If WinActive("ahk_exe WindowsTerminal.exe") {
+    Send {Ctrl Down}{Insert}{Ctrl Up}
   } Else {
     Send, {Ctrl Down}c{Ctrl Up}
   }
@@ -86,6 +90,8 @@ Space & v::
   If WinActive("ahk_exe ConEmu64.exe") {
     Send {LShift Down}{Insert}{LShift Up}
   } Else If WinActive("ahk_exe mintty.exe") {
+    Send {LShift Down}{Insert}{LShift Up}
+  } Else If WinActive("ahk_exe WindowsTerminal.exe") {
     Send {LShift Down}{Insert}{LShift Up}
   } Else {
     Send, {Ctrl Down}v{Ctrl Up}
