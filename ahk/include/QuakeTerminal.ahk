@@ -48,7 +48,8 @@ ToggleTerminal()
     if WinExist(WinMatcher)
     ; Window Exists
     {
-        DetectHiddenWindows, Off
+        ; This was causing weirdness in virtual desktops
+        ; DetectHiddenWindows, Off
 
         ; Check if its hidden
         if !WinExist(WinMatcher) || !WinActive(WinMatcher)
