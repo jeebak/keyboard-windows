@@ -79,6 +79,15 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
 
 ;   ToolTip, Debug: X: %posX% Y: %posY% W: %width% H: %height%
 
+    If WinActive("ahk_exe chrome.exe") {
+        ; Fudge factor for my current monitor
+        fudge = 10
+
+        width := width + 2 * fudge
+        height := height + fudge
+        posX := posX - fudge
+    }
+
     WinMove,A,,%posX%,%posY%,%width%,%height%
 }
 
