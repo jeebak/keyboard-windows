@@ -79,14 +79,22 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
 
 ;   ToolTip, Debug: X: %posX% Y: %posY% W: %width% H: %height%
 
-    If WinActive("ahk_exe chrome.exe") {
-        ; Fudge factor for my current monitor
-        fudge = 10
+    WinGet, active_exe_name, ProcessName, A
+    ; MsgBox, %active_exe_name%, %fudgeA%, %fudgeB%
 
-        width := width + 2 * fudge
-        height := height + fudge
-        posX := posX - fudge
-    }
+    ; Fudge factor for my current monitor
+    fudge = 0
+    fudgeA = ApplicationFrameHost.exe,WindowsTerminal.exe,chrome.exe
+    fudgeB = firefox.exe,notepad.exe
+
+    If active_exe_name in %fudgeA%
+        fudge = 9
+    else if active_exe_name in %fudgeB%
+        fudge = 5
+
+    width := width + 2 * fudge
+    height := height + fudge
+    posX := posX - fudge
 
     WinMove,A,,%posX%,%posY%,%width%,%height%
 }
