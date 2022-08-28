@@ -9,11 +9,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; Alt-/
 !/::ToggleTerminal()
 
-ShowAndPositionTerminal(Fullscreen:=True)
-{
+ShowTerminal() {
     WinShow ahk_class CASCADIA_HOSTING_WINDOW_CLASS
     WinActivate ahk_class CASCADIA_HOSTING_WINDOW_CLASS
+}
 
+PositionTerminal(Fullscreen:=True)
+{
     SysGet, WorkArea, MonitorWorkArea
     ; MsgBox, Left: %WorkAreaLeft% -- Top: %WorkAreaTop% -- Right: %WorkAreaRight% -- Bottom %WorkAreaBottom%.
 
@@ -35,6 +37,13 @@ ShowAndPositionTerminal(Fullscreen:=True)
         Height := A_ScreenHeight * 0.5
     }
 
+    ; Fudge factor for my current monitor
+    Fudge = 9
+
+    Width := Width + 2 * Fudge
+    Height := Height + Fudge
+    X := X - Fudge
+
     ; WinMove, WinTitle, WinText, X, Y , Width, Height, ExcludeTitle, ExcludeText
     WinMove, ahk_class CASCADIA_HOSTING_WINDOW_CLASS,, X, Y, Width, Height,,
 }
@@ -54,7 +63,7 @@ ToggleTerminal()
         ; Check if its hidden
         if !WinExist(WinMatcher) || !WinActive(WinMatcher)
         {
-            ShowAndPositionTerminal()
+            ShowTerminal()
         }
         else if WinExist(WinMatcher)
         {
@@ -69,6 +78,7 @@ ToggleTerminal()
         wt_exe := "C:\Users\" A_UserName "\AppData\Local\Microsoft\WindowsApps\wt.exe"
         Run, %wt_exe%
         Sleep, 1000
-        ShowAndPositionTerminal()
+        PositionTerminal()
+        ShowTerminal()
     }
 }
