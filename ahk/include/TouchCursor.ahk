@@ -63,6 +63,8 @@ Space & d::
     Send ^d
   } Else If WinActive("ahk_class Notepad") {
     Send !{F4}
+  } Else If WinActive("ahk_exe WindowsTerminal.exe") {
+    Send, {Ctrl Down}{Shift Down}w{Ctrl Up}{Shift Up}
   } Else {
     Send ^w
   }
@@ -99,7 +101,13 @@ Space & v::
   Return
 
 ; Tab New/Reopen
-Space & ,::Send, {Ctrl Down}t{Ctrl Up}
+Space & ,::
+  If WinActive("ahk_exe WindowsTerminal.exe") {
+    Send, {Ctrl Down}{Shift Down}t{Ctrl Up}{Shift Up}
+  } Else {
+    Send, {Ctrl Down}t{Ctrl Up}
+  }
+  Return
 Space & .::Send, {Ctrl Down}{Shift Down}t{Ctrl Up}{Shift Up}
 
 ; Backtick and tilde (The New Adventures of...)
