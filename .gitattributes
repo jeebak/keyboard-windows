@@ -1,0 +1,5 @@
+# This is a Windows-focused config repo — force all text files to use
+# CRLF line endings in the working tree, regardless of the local
+# core.autocrlf setting. Git still stores blobs normalized to LF
+# internally, which keeps diffs clean.
+* text=auto eol=crlf
