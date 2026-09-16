@@ -18,17 +18,17 @@ TrayTip, AutoHotKey, Started, 1
 SoundBeep, 300, 150
 Return
 ; ------------------------------------------------------------------------------
-#Include include\AdvancedWindowSnap.ahk
-#Include include\AlwaysOnTop.ahk
-#Include include\CapsLockTapEscapeHoldControl.ahk
-; #Include include\Media.ahk
-#Include include\Screenshots.ahk
-#Include include\Spotlight.ahk
-#Include include\TabModifier.ahk
-#Include include\TouchCursor.ahk
-#Include include\DockWin.ahk
-#Include include\QuakeTerminal.ahk
-#Include include\Misc.ahk
+#Include v1\include\AdvancedWindowSnap.ahk
+#Include v1\include\AlwaysOnTop.ahk
+#Include v1\include\CapsLockTapEscapeHoldControl.ahk
+; #Include v1\include\Media.ahk
+#Include v1\include\Screenshots.ahk
+#Include v1\include\Spotlight.ahk
+#Include v1\include\TabModifier.ahk
+#Include v1\include\TouchCursor.ahk
+#Include v1\include\DockWin.ahk
+#Include v1\include\QuakeTerminal.ahk
+#Include v1\include\Misc.ahk
 ; ------------------------------------------------------------------------------
 ; LockWorkStation and turn monitor off
 #+^Tab::
