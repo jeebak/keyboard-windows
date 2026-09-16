@@ -4,11 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-AutoHotkey (v1.1, not v2) scripts that reimplement the author's macOS
+AutoHotkey scripts that reimplement the author's macOS
 [Karabiner-Elements](https://ke-complex-modifications.pqrs.org/?q=jeebak)
 key mappings on Windows: CapsLock→Control/Escape, a TouchCursor-style chord
 layer, window snapping, a Quake-style terminal toggle, and misc mouse/window
-utilities. See `README.md` for the mapping rationale and links.
+utilities. See `README.md` for the mapping rationale and links. The live
+script is still AHK v1.1 (`ahk/v1/`); a v2 port is in progress under
+`ahk/v2/` but not yet wired up or live — see Architecture below.
 
 ## Commands
 
@@ -28,13 +30,15 @@ source with no package manager.
 
 ## Architecture
 
-- **`ahk/init.ahk`** is the single entry point. It sets AHK-wide options
-  (`#SingleInstance Force`, `#installKeybdHook`, `#Persistent`), then
-  `#Include`s every feature module from `ahk/include/`, then defines the two
-  global hotkeys above. To add a new feature module, create it under
-  `ahk/include/` and add an `#Include` line here — order matters only if two
-  modules would otherwise redefine the same hotkey.
-- **`ahk/include/*.ahk`** — one file per feature domain, each independently
+- **`ahk/init.ahk`** is the single entry point (stays at `ahk/`, one level up
+  from the version-specific trees below, so the Startup shortcut's target path
+  doesn't need to change when the live version changes). It sets AHK-wide
+  options (`#SingleInstance Force`, `#installKeybdHook`, `#Persistent`), then
+  `#Include`s every feature module from `ahk/v1/include/`, then defines the
+  two global hotkeys above. To add a new v1 feature module, create it under
+  `ahk/v1/include/` and add an `#Include` line here — order matters only if
+  two modules would otherwise redefine the same hotkey.
+- **`ahk/v1/include/*.ahk`** — one file per feature domain, each independently
   runnable/readable in isolation (no cross-includes between them):
   `TouchCursor.ahk` (Space-chord layer for arrows/media/app shortcuts),
   `AdvancedWindowSnap.ahk` (9-grid + thirds/fourths window snapping),
@@ -45,6 +49,12 @@ source with no package manager.
   `AlwaysOnTop.ahk`, `TabModifier.ahk`, `Media.ahk`, `Misc.ahk`
   (middle-click paste, chorded left+right mouse → middle-click), plus
   `mouser6.ahk`.
+- **`ahk/v2/include/*.ahk`** is an in-progress AutoHotkey v2 port, not yet
+  wired into `init.ahk` or live — full plan, scope, and status in
+  `.EXCLUDED/claude/plans/ahk-v1-to-v2-migration.md` (gitignored, local-only).
+  `DockWin.ahk` and `mouser6.ahk` are deliberately excluded from the v2 port
+  (see that plan for why); `DockWin.ahk` will keep running standalone under
+  v1.1 after cutover.
 - **Per-app conditional dispatch** is the main idiom worth knowing before
   adding a hotkey: many handlers branch on the foreground window via
   `WinActive("ahk_exe X.exe")` / `ahk_class` (see the `Space & d/c/v/,`
@@ -59,11 +69,13 @@ source with no package manager.
   author's current hardware — see recent commit history ("Add fudge factor
   for chrome.exe", "Update fudge logic") before assuming a snapping bug is
   logic rather than a fudge-value miscalibration.
-- **AHK v1.1 syntax throughout** — comma-style commands (`Send, {F1}`,
-  `WinGet activeWin, ID, A`), `#IfWinActive` context directives, and
-  `DllCall`/`NumGet` for raw Win32 monitor APIs (`GetMonitorIndexFromWindow`
-  in `AdvancedWindowSnap.ahk`). Don't introduce v2 syntax (`:=` expressions
-  as statements, fat-arrow functions, etc.) — it won't run under v1.1.
+- **`ahk/v1/` is AHK v1.1 syntax throughout** — comma-style commands
+  (`Send, {F1}`, `WinGet activeWin, ID, A`), `#IfWinActive` context
+  directives, and `DllCall`/`NumGet` for raw Win32 monitor APIs
+  (`GetMonitorIndexFromWindow` in `AdvancedWindowSnap.ahk`). Don't introduce
+  v2 syntax there — it won't run under v1.1. `ahk/v2/` is the opposite: v2
+  syntax only (function calls, `:=`-everywhere expressions, `#HotIf` instead
+  of `#IfWinActive`) — don't backport v1 command syntax into it.
 - **Line endings**: `.gitattributes` forces `eol=crlf` for all text files
   (this is a Windows-only config repo) — don't fight it by committing LF.
 - `ahk/WinPos*.txt` is gitignored (`.gitignore`) — runtime state, not source.
