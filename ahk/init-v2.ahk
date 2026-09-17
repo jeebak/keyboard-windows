@@ -19,6 +19,13 @@ InstallKeybdHook()
 TraySetIcon("Shell32.dll", 25, 1)
 TrayTip("Started", "AutoHotKey", 1)
 SoundBeep(300, 150)
+; Moved here from QuakeTerminal.ahk: any top-level statement in an
+; #Include'd file is unreachable once an earlier #Include's own hotkeys
+; have already ended the script's top-level execution flow, regardless of
+; where the statement sits within its own file. Script-wide settings like
+; these belong in the entry point for exactly this reason.
+SendMode "Input"  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir A_ScriptDir  ; Ensures a consistent starting directory.
 Return
 ; ------------------------------------------------------------------------------
 #Include v2\include\AdvancedWindowSnap.ahk

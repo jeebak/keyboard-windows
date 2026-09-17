@@ -5,8 +5,13 @@
 ; #NoEnv removed here -- v2 always behaves as if it were set (no fallback
 ; to environment variables for blank vars), so the directive doesn't exist.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode "Input"  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir A_ScriptDir  ; Ensures a consistent starting directory.
+
+; SendMode "Input" / SetWorkingDir A_ScriptDir moved to ahk/init-v2.ahk's
+; own setup section. Same reachability issue as AlwaysOnTop.ahk's constant:
+; this file is #Include'd after AdvancedWindowSnap.ahk, whose own hotkeys
+; already end the assembled script's top-level execution flow by the time
+; this file's content is reached, so a top-level statement here -- no
+; matter where it sits in this file -- would never run.
 
 ; Alt-/
 !/::ToggleTerminal()
