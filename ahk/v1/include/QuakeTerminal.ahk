@@ -74,12 +74,8 @@ ToggleTerminal()
     }
     else
     {
-        ; Bare name, no path: %LOCALAPPDATA%\Microsoft\WindowsApps (where
-        ; Store/MSIX app execution aliases like wt.exe live) is on PATH by
-        ; default, and Run searches PATH for a bare target -- more robust
-        ; than hardcoding that path (which also depends on A_UserName
-        ; matching the actual home folder name, which isn't guaranteed) or
-        ; assuming Windows Terminal is always installed via that mechanism.
+        ; wt.exe's app execution alias lives in
+        ; %LOCALAPPDATA%\Microsoft\WindowsApps, which is on PATH by default.
         Run, wt.exe
         Sleep, 1000
         PositionTerminal()

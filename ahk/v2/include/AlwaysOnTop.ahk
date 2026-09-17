@@ -11,11 +11,6 @@
 ;
 ; Shift+middle click
 ; Control+middle click
-; 0x80 = WS_EX_TOOLWINDOW, inlined rather than a top-level constant: once
-; this file is #Include'd after another file whose own hotkeys come first
-; (ahk/init-v2.ahk does exactly this), a top-level statement here is
-; unreachable regardless of where it sits *within this file* -- reaching
-; any hotkey anywhere earlier in the assembled script already ended v2's
-; top-level execution flow. A literal has no such reachability dependency.
+; 0x80 = WS_EX_TOOLWINDOW
 +MButton:: WinSetExStyle("^" . 0x80, "A")
 ^MButton:: WinSetAlwaysOnTop(-1, "A")

@@ -2,16 +2,7 @@
 ; Based on: https://gist.github.com/andrewgodwin/89920ee02501ab12d09b02500897066c
 ; Simpler than: https://github.com/lonepie/mintty-quake-console
 
-; #NoEnv removed here -- v2 always behaves as if it were set (no fallback
-; to environment variables for blank vars), so the directive doesn't exist.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-
-; SendMode "Input" / SetWorkingDir A_ScriptDir moved to ahk/init-v2.ahk's
-; own setup section. Same reachability issue as AlwaysOnTop.ahk's constant:
-; this file is #Include'd after AdvancedWindowSnap.ahk, whose own hotkeys
-; already end the assembled script's top-level execution flow by the time
-; this file's content is reached, so a top-level statement here -- no
-; matter where it sits in this file -- would never run.
 
 ; Alt-/
 !/::ToggleTerminal()
@@ -81,12 +72,8 @@ ToggleTerminal()
     }
     else
     {
-        ; Bare name, no path: %LOCALAPPDATA%\Microsoft\WindowsApps (where
-        ; Store/MSIX app execution aliases like wt.exe live) is on PATH by
-        ; default, and Run searches PATH for a bare target -- more robust
-        ; than hardcoding that path (which also depends on A_UserName
-        ; matching the actual home folder name, which isn't guaranteed) or
-        ; assuming Windows Terminal is always installed via that mechanism.
+        ; wt.exe's app execution alias lives in
+        ; %LOCALAPPDATA%\Microsoft\WindowsApps, which is on PATH by default.
         Run "wt.exe"
         Sleep 1000
         PositionTerminal()
