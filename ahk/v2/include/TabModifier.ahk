@@ -1,17 +1,15 @@
 #Requires AutoHotkey v2.0
-; Tab key as Modifier
+; Tab as a chord-prefix key (same pattern as Space in TouchCursor.ahk)
 
-; "Hyper"
-$Tab:: {
-  global tDown
-  Send "{Blind}{Alt Down}{Ctrl Down}{Shift Down}"
-  tDown := A_TickCount
+; Tab+t -> repeatable Tab
+Tab & t:: Send "{Tab}"
+
+; Tab+v -> Ditto's own default hotkey (Ctrl+`), since Ditto listens for
+; that rather than a raw keypress. No-op on machines where Ditto isn't
+; running (this script runs on more than one).
+Tab & v:: {
+  if ProcessExist("Ditto.exe")
+    Send "{Ctrl Down}``{Ctrl Up}"
 }
 
-$Tab up:: {
-  global tDown
-  if (A_TickCount - tDown) < 200  ; Modify press time as needed (milliseconds)
-    Send "{Blind}{Alt Up}{Ctrl Up}{Shift Up}{Tab}"
-  else
-    Send "{Blind}{Alt Up}{Ctrl Up}{Shift Up}"
-}
+Tab:: Send "{Tab}"
