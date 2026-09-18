@@ -5,22 +5,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 AutoHotkey scripts that reimplement the author's macOS
-[Karabiner-Elements](https://ke-complex-modifications.pqrs.org/?q=jeebak)
+[Karabiner-Elements](https://ke-complex-modifications.pqrs.org/?rule=json%2Fpersonal_jeebak.json)
 key mappings on Windows: CapsLock→Control/Escape, a TouchCursor-style chord
 layer, window snapping, a Quake-style terminal toggle, and misc mouse/window
-utilities. See `README.md` for the mapping rationale and links. The live
-script is still AHK v1.1 (`ahk/v1/`); a v2 port is in progress under
-`ahk/v2/` but not yet wired up or live — see Architecture below.
+utilities. See `README.md` for the mapping rationale and links. The entry
+point `ahk/init.ahk` is now AHK v2 (`ahk/v2/`); the original AHK v1.1 script
+is kept as `ahk/init-v1.ahk` (`ahk/v1/`) — see Architecture below.
 
 ## Commands
 
-There is no build, lint, or test tooling — this is plain interpreted AHK v1.1
+There is no build, lint, or test tooling — this is plain interpreted AHK
 source with no package manager.
 
-- **Run/reload**: AutoHotkey v1.1 must be installed on the target Windows
+- **Run/reload**: AutoHotkey v2 must be installed on the target Windows
   machine. `ahk/init.ahk` is the entry point — either double-click it to run,
   or shortcut it into the Startup folder (see the comment at the top of the
-  file) so it loads on login.
+  file) so it loads on login. To run the v1.1 version instead, install
+  AutoHotkey v1.1 and run `ahk/init-v1.ahk`; don't run both at once, since
+  they define the same hotkeys.
 - **Reload after editing**: the running script defines its own reload hotkey,
   `Ctrl+Win+Alt+R` (`^#!r::Reload`, in `ahk/init.ahk`). There's no separate
   "check syntax" step — reloading and exercising the changed hotkey by hand
@@ -30,16 +32,20 @@ source with no package manager.
 
 ## Architecture
 
-- **`ahk/init.ahk`** is the single entry point (stays at `ahk/`, one level up
-  from the version-specific trees below, so the Startup shortcut's target path
-  doesn't need to change when the live version changes). It sets AHK-wide
-  options (`#SingleInstance Force`, `#installKeybdHook`, `#Persistent`), then
-  `#Include`s every feature module from `ahk/v1/include/`, then defines the
-  two global hotkeys above. To add a new v1 feature module, create it under
-  `ahk/v1/include/` and add an `#Include` line here — order matters only if
-  two modules would otherwise redefine the same hotkey.
-- **`ahk/v1/include/*.ahk`** — one file per feature domain, each independently
-  runnable/readable in isolation (no cross-includes between them):
+- **`ahk/init.ahk`** is the entry point (`#Requires AutoHotkey v2.0`; stays at
+  `ahk/`, one level up from the version-specific trees below, so the Startup
+  shortcut's target path doesn't change between versions). It does the
+  script-wide setup (`#SingleInstance Force`, `InstallKeybdHook()`, tray
+  icon), then `#Include`s every feature module from `ahk/v2/include/`, then
+  defines the two global hotkeys above. To add a new feature module, create
+  it under `ahk/v2/include/` and add an `#Include` line here — order matters
+  only if two modules would otherwise redefine the same hotkey.
+- **`ahk/init-v1.ahk`** is the same entry point for AHK v1.1: identical
+  setup and global hotkeys, but it `#Include`s `ahk/v1/include/` (including
+  `DockWin.ahk`, which has no v2 port).
+- **`ahk/v1/include/*.ahk`** and **`ahk/v2/include/*.ahk`** — one file per
+  feature domain in each tree, each independently runnable/readable in
+  isolation (no cross-includes between them). Domains, as named in v1:
   `TouchCursor.ahk` (Space-chord layer for arrows/media/app shortcuts),
   `AdvancedWindowSnap.ahk` (9-grid + thirds/fourths window snapping),
   `QuakeTerminal.ahk` (Alt+/ show/hide/spawn Windows Terminal),
@@ -49,10 +55,9 @@ source with no package manager.
   `AlwaysOnTop.ahk`, `TabModifier.ahk`, `Media.ahk`, `Misc.ahk`
   (middle-click paste, chorded left+right mouse → middle-click), plus
   `mouser6.ahk`.
-- **`ahk/v2/include/*.ahk`** is an in-progress AutoHotkey v2 port, not yet
-  wired into `init.ahk` or live. `DockWin.ahk` and `mouser6.ahk` are
-  deliberately excluded from the v2 port; `DockWin.ahk` will keep running
-  standalone under v1.1 after cutover.
+- **`DockWin.ahk` and `mouser6.ahk` are deliberately excluded from the v2
+  port**, so they exist only under `ahk/v1/include/`; only `init-v1.ahk`
+  loads `DockWin.ahk`.
 - **Per-app conditional dispatch** is the main idiom worth knowing before
   adding a hotkey: many handlers branch on the foreground window via
   `WinActive("ahk_exe X.exe")` / `ahk_class` (see the `Space & d/c/v/,`
@@ -71,9 +76,10 @@ source with no package manager.
   (`Send, {F1}`, `WinGet activeWin, ID, A`), `#IfWinActive` context
   directives, and `DllCall`/`NumGet` for raw Win32 monitor APIs
   (`GetMonitorIndexFromWindow` in `AdvancedWindowSnap.ahk`). Don't introduce
-  v2 syntax there — it won't run under v1.1. `ahk/v2/` is the opposite: v2
-  syntax only (function calls, `:=`-everywhere expressions, `#HotIf` instead
-  of `#IfWinActive`) — don't backport v1 command syntax into it.
+  v2 syntax there — it won't run under v1.1. `ahk/v2/` (what `init.ahk`
+  loads) is the opposite: v2 syntax only (function calls, `:=`-everywhere
+  expressions, `#HotIf` instead of `#IfWinActive`) — don't backport v1
+  command syntax into it.
 - **Line endings**: `.gitattributes` forces `eol=crlf` for all text files
   (this is a Windows-only config repo) — don't fight it by committing LF.
 - `ahk/WinPos*.txt` is gitignored (`.gitignore`) — runtime state, not source.

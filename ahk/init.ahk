@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 ; Create shortcut to this file under: C:\Users\<YOURUSERNAME>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 ; # Win (Windows logo key)
@@ -11,47 +12,44 @@
 ; ------------------------------------------------------------------------------
 ; https://stackoverflow.com/questions/15706534/hotkey-to-restart-autohotkey-script
 #SingleInstance Force
-#installKeybdHook
-#Persistent
-Menu, Tray, Icon , Shell32.dll, 25, 1
-TrayTip, AutoHotKey, Started, 1
-SoundBeep, 300, 150
+InstallKeybdHook()
+TraySetIcon("Shell32.dll", 25, 1)
+TrayTip("Started", "AutoHotKey", 1)
+SoundBeep(300, 150)
+; Script-wide setup must run before any hotkey is defined -- reaching a
+; hotkey ends v2's top-level execution flow, so anything here has to run
+; before the #Include'd files' own hotkeys do.
+SendMode "Input"  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir A_ScriptDir  ; Ensures a consistent starting directory.
 Return
 ; ------------------------------------------------------------------------------
-#Include v1\include\AdvancedWindowSnap.ahk
-#Include v1\include\AlwaysOnTop.ahk
-#Include v1\include\CapsLockTapEscapeHoldControl.ahk
-; #Include v1\include\Media.ahk
-#Include v1\include\Screenshots.ahk
-#Include v1\include\Spotlight.ahk
-#Include v1\include\TabModifier.ahk
-#Include v1\include\TouchCursor.ahk
-#Include v1\include\DockWin.ahk
-#Include v1\include\QuakeTerminal.ahk
-#Include v1\include\Misc.ahk
+#Include v2\include\AdvancedWindowSnap.ahk
+#Include v2\include\AlwaysOnTop.ahk
+#Include v2\include\CapsLockTapEscapeHoldControl.ahk
+; #Include v2\include\Media.ahk
+#Include v2\include\Screenshots.ahk
+#Include v2\include\Spotlight.ahk
+#Include v2\include\TabModifier.ahk
+#Include v2\include\TouchCursor.ahk
+#Include v2\include\QuakeTerminal.ahk
+#Include v2\include\Misc.ahk
 ; ------------------------------------------------------------------------------
 ; LockWorkStation and turn monitor off
-#+^Tab::
-{
-  Sleep, 200
+#+^Tab:: {
+  Sleep 200
   DllCall("LockWorkStation")
-  Sleep, 1000
+  Sleep 1000
 
   ; Turn off monitor
   ; 0x112 == WM_SYSCOMMAND, 0xF170 == SC_MONITORPOWER
-; SendMessage,0x112,0xF170,2,,Program Manager
+; SendMessage(0x112, 0xF170, 2, , "Program Manager")
 
   ; Sleep/Suspend:
   DllCall("PowrProf\SetSuspendState", "int", 0, "int", 0, "int", 0)
 
   ; Hibernate:
 ; DllCall("PowrProf\SetSuspendState", "int", 1, "int", 0, "int", 0)
-
-  Return
 }
-Return
 ; ------------------------------------------------------------------------------
 ; Reload this script (Ctrl+Win+Alt+R)
-^#!r::
-  Reload
-Return
+^#!r::Reload
