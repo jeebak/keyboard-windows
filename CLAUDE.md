@@ -50,11 +50,9 @@ source with no package manager.
   (middle-click paste, chorded left+right mouse → middle-click), plus
   `mouser6.ahk`.
 - **`ahk/v2/include/*.ahk`** is an in-progress AutoHotkey v2 port, not yet
-  wired into `init.ahk` or live — full plan, scope, and status in
-  `.EXCLUDED/claude/plans/ahk-v1-to-v2-migration.md` (gitignored, local-only).
-  `DockWin.ahk` and `mouser6.ahk` are deliberately excluded from the v2 port
-  (see that plan for why); `DockWin.ahk` will keep running standalone under
-  v1.1 after cutover.
+  wired into `init.ahk` or live. `DockWin.ahk` and `mouser6.ahk` are
+  deliberately excluded from the v2 port; `DockWin.ahk` will keep running
+  standalone under v1.1 after cutover.
 - **Per-app conditional dispatch** is the main idiom worth knowing before
   adding a hotkey: many handlers branch on the foreground window via
   `WinActive("ahk_exe X.exe")` / `ahk_class` (see the `Space & d/c/v/,`
