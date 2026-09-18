@@ -48,8 +48,8 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
         posX  := MonitorWorkAreaLeft
         width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
     } else if (winPlaceHorizontal == "middle-third") {
-        posX  := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
-        width := posX
+        posX  := MonitorWorkAreaLeft + (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
+        width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
     } else if (winPlaceHorizontal == "right-third") {
         posX  := MonitorWorkAreaLeft + (MonitorWorkAreaRight - MonitorWorkAreaLeft)/1.5
         width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/3
@@ -58,7 +58,7 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
         posX  := MonitorWorkAreaLeft
     } else if (winPlaceHorizontal == "two-fourth") {
         width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
-        posX  := width
+        posX  := MonitorWorkAreaLeft + width
     } else if (winPlaceHorizontal == "three-fourth") {
         width := (MonitorWorkAreaRight - MonitorWorkAreaLeft)/4
         posX  := MonitorWorkAreaLeft + (MonitorWorkAreaRight - MonitorWorkAreaLeft)/2
