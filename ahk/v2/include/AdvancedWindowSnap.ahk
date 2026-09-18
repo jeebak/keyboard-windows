@@ -129,6 +129,28 @@ SnapWiarae(direction) {
 }
 
 /**
+ * CenterActiveWindow shrinks the active window to 2/3 size and centers it
+ * on its current monitor, with equal margins on every side.
+ */
+CenterActiveWindow() {
+    activeWin := WinGetID("A")
+    activeMon := GetMonitorIndexFromWindow(activeWin)
+
+    MonitorGetWorkArea(activeMon, &MonitorWorkAreaLeft, &MonitorWorkAreaTop, &MonitorWorkAreaRight, &MonitorWorkAreaBottom)
+
+    fullWidth  := MonitorWorkAreaRight - MonitorWorkAreaLeft
+    fullHeight := MonitorWorkAreaBottom - MonitorWorkAreaTop
+
+    width  := fullWidth * 2 / 3
+    height := fullHeight * 2 / 3
+    posX   := MonitorWorkAreaLeft + fullWidth / 6
+    posY   := MonitorWorkAreaTop + fullHeight / 6
+
+    WinRestore("A")
+    WinMove(posX, posY, width, height, "A")
+}
+
+/**
  * GetMonitorIndexFromWindow retrieves the HWND (unique ID) of a given window.
  * @param {Uint} windowHandle
  * @author shinywong
@@ -195,7 +217,7 @@ GetMonitorIndexFromWindow(windowHandle) {
 ^+#m::SnapActiveWindow("bottom",    "left",         "half")
 ^+#.::SnapActiveWindow("bottom",    "right",        "half")
 ; Center
-^+#,::SnapActiveWindow("top",       "full",         "full")
+^+#,::CenterActiveWindow()
 ; Maximize
 ^+#;::SnapActiveWindow("top",       "full",         "full")
 ; -----------------------------------------------------------------------------
