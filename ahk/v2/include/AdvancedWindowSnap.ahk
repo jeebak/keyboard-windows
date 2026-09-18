@@ -151,6 +151,18 @@ CenterActiveWindow() {
 }
 
 /**
+ * ToggleMaximizeActiveWindow toggles the active window between maximized
+ * and restored, using the OS's own maximize state rather than resizing to
+ * fill the work area -- so a second press un-maximizes it.
+ */
+ToggleMaximizeActiveWindow() {
+    if WinGetMinMax("A") = 1
+        WinRestore("A")
+    else
+        WinMaximize("A")
+}
+
+/**
  * GetMonitorIndexFromWindow retrieves the HWND (unique ID) of a given window.
  * @param {Uint} windowHandle
  * @author shinywong
@@ -218,8 +230,8 @@ GetMonitorIndexFromWindow(windowHandle) {
 ^+#.::SnapActiveWindow("bottom",    "right",        "half")
 ; Center
 ^+#,::CenterActiveWindow()
-; Maximize
-^+#;::SnapActiveWindow("top",       "full",         "full")
+; Maximize (toggle)
+^+#;::ToggleMaximizeActiveWindow()
 ; -----------------------------------------------------------------------------
 ; Control+Shift+Alt
 ; -----------------------------------------------------------------------------
