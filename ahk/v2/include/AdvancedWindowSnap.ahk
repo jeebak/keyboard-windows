@@ -97,6 +97,7 @@ SnapActiveWindow(winPlaceVertical, winPlaceHorizontal, winSizeHeight) {
     height := height + fudge
     posX := posX - fudge
 
+    WinRestore("A")
     WinMove(posX, posY, width, height, "A")
 }
 
@@ -123,6 +124,7 @@ SnapWiarae(direction) {
 
 ;   ToolTip("Debug: Y: " posY " H: " height)
 
+    WinRestore("A")
     WinMove(, posY, , height, "A")
 }
 
