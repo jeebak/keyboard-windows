@@ -19,11 +19,12 @@ HomeRowState() {
     return st
 }
 
-; Off inside a Space/Tab chord so Space & ; and friends keep working, and
-; in Remote Desktop, where the remote side owns the modifiers.
+; Off inside a Space/Tab chord so Space & ; and friends keep working, in
+; Remote Desktop, where the remote side owns the modifiers, and in
+; MouseCursor Mode, where ; and ' are mouse buttons.
 HomeRowCanStart() {
     return !GetKeyState("Space", "P") && !GetKeyState("Tab", "P")
-        && !WinActive("ahk_exe mstsc.exe")
+        && !WinActive("ahk_exe mstsc.exe") && !MouseCursorActive()
 }
 
 ; The release handler is gated on tracking, not on HomeRowCanStart(), so a

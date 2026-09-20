@@ -19,14 +19,15 @@ NumberRowState() {
     return st
 }
 
-; Off inside a Space/Tab chord (Space & 1 is F1), in Remote Desktop, and
-; while Ctrl, Alt or Win is down, so Ctrl+1 tab switching and the Win/Alt
-; snap and screenshot hotkeys on number keys reach their own handlers.
+; Off inside a Space/Tab chord (Space & 1 is F1), in Remote Desktop, in
+; MouseCursor Mode, and while Ctrl, Alt or Win is down, so Ctrl+1 tab
+; switching and the Win/Alt snap and screenshot hotkeys on number keys reach
+; their own handlers.
 NumberRowCanStart() {
     return !GetKeyState("Space", "P") && !GetKeyState("Tab", "P")
         && !GetKeyState("Ctrl") && !GetKeyState("Alt")
         && !GetKeyState("LWin") && !GetKeyState("RWin")
-        && !WinActive("ahk_exe mstsc.exe")
+        && !WinActive("ahk_exe mstsc.exe") && !MouseCursorActive()
 }
 
 NumberRowAnyTracking() {

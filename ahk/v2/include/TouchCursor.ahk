@@ -4,8 +4,9 @@
 ;   https://autohotkey.com/boards/viewtopic.php?t=6525
 
 ; Suppress the whole Space-chord layer during an active Remote Desktop
-; session so Space reaches the remote host unmodified.
-#HotIf !WinActive("ahk_exe mstsc.exe")
+; session so Space reaches the remote host unmodified, and while
+; MouseCursor Mode is on, where Space is the left button.
+#HotIf !WinActive("ahk_exe mstsc.exe") && !MouseCursorActive()
 
 ; Function keys
 Space & 1:: Send "{F1}"
