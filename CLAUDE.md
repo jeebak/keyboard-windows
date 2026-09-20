@@ -58,6 +58,9 @@ source with no package manager.
 - **`DockWin.ahk` and `mouser6.ahk` are deliberately excluded from the v2
   port**, so they exist only under `ahk/v1/include/`; only `init-v1.ahk`
   loads `DockWin.ahk`.
+- **`HomeRowModifiers.ahk` exists only under `ahk/v2/include/`** (no v1
+  counterpart): `;` and `'` tap for themselves and hold for Ctrl / Alt, a port
+  of the Karabiner rule of the same name.
 - **Per-app conditional dispatch** is the main idiom worth knowing before
   adding a hotkey: many handlers branch on the foreground window via
   `WinActive("ahk_exe X.exe")` / `ahk_class` (see the `Space & d/c/v/,`

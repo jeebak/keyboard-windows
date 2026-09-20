@@ -31,6 +31,7 @@ Return
 #Include v2\include\Spotlight.ahk
 #Include v2\include\TabModifier.ahk
 #Include v2\include\TouchCursor.ahk
+#Include v2\include\HomeRowModifiers.ahk
 #Include v2\include\QuakeTerminal.ahk
 #Include v2\include\Misc.ahk
 ; ------------------------------------------------------------------------------
